@@ -46,6 +46,15 @@ export class TaskRepositoryImpl implements TaskRepository {
 		throw new Error("Method not implemented");
 	}
 	getAll(): Promise<GetAllTasksOutputDTO> {
-		throw new Error("Method not implemented");
+		return new Promise((resolve, reject) => {
+			db.transaction((tx) => {
+				tx.executeSql(
+					"SELECT * FROM tasks;",
+					[],
+					(_, result) => resolve(result.rows._array as TaskEntity[]),
+					(_, err) => handleSQLiteError(err, reject)
+				);
+			});
+		});
 	}
 }
