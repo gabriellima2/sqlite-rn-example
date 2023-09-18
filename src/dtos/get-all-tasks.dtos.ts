@@ -1,3 +1,3 @@
 import { TaskEntity } from "../entities";
 
-export type GetAllTasksOutputDTO = TaskEntity;
+export type GetAllTasksOutputDTO = TaskEntity[];
