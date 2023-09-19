@@ -42,7 +42,7 @@ export class TaskRepositoryImpl implements TaskRepository {
 					(_, result) => {
 						const task = result.rows._array[0] as TaskEntity;
 						if (!task) return reject(new Error());
-						return tx.executeSql(
+						tx.executeSql(
 							"DELETE FROM tasks WHERE id = ?;",
 							[id],
 							() => resolve(task),
