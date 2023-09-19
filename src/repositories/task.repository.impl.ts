@@ -6,6 +6,8 @@ import {
 	UpdateTaskOutputDTO,
 	DeleteTaskOutputDTO,
 	InsertTaskOutputDTO,
+	FindTaskByIDInput,
+	FindTaskByIDOutput,
 } from "../dtos";
 import { TaskRepository } from "./task.repository";
 import { TaskEntity } from "../entities";
@@ -21,18 +23,9 @@ export class TaskRepositoryImpl implements TaskRepository {
 				tx.executeSql(
 					"INSERT INTO tasks (title, description, is_completed, updated_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP);",
 					[title, description ?? null, is_completed],
-					(tx, result) => {
+					(_, result) => {
 						if (!result.insertId) return;
-						return tx.executeSql(
-							"SELECT * FROM tasks WHERE id = ?;",
-							[result.insertId],
-							(_, result) => {
-								const insertedTask = result.rows._array[0] as TaskEntity;
-								if (!insertedTask) return reject(new Error());
-								resolve(insertedTask);
-							},
-							(_, err) => handleSQLiteError(err, reject)
-						);
+						resolve(this.findByID(result.insertId));
 					},
 					(_, err) => handleSQLiteError(err, reject)
 				);
@@ -68,18 +61,7 @@ export class TaskRepositoryImpl implements TaskRepository {
 				tx.executeSql(
 					"UPDATE tasks SET title = COALESCE(?, title), description = COALESCE(?, description), is_completed = COALESCE(?, is_completed), updated_at = CURRENT_TIMESTAMP WHERE id = ?;",
 					[title ?? null, description ?? null, is_completed ?? null, id],
-					() => {
-						tx.executeSql(
-							"SELECT * FROM tasks WHERE id = ?;",
-							[id],
-							(_, result) => {
-								const updatedTask = result.rows._array[0] as TaskEntity;
-								if (!updatedTask) return reject(new Error());
-								resolve(updatedTask);
-							},
-							(_, err) => handleSQLiteError(err, reject)
-						);
-					},
+					() => resolve(this.findByID(id)),
 					(_, err) => handleSQLiteError(err, reject)
 				);
 			});
@@ -92,6 +74,22 @@ export class TaskRepositoryImpl implements TaskRepository {
 					"SELECT * FROM tasks;",
 					[],
 					(_, result) => resolve(result.rows._array as TaskEntity[]),
+					(_, err) => handleSQLiteError(err, reject)
+				);
+			});
+		});
+	}
+	findByID(id: FindTaskByIDInput): Promise<FindTaskByIDOutput> {
+		return new Promise((resolve, reject) => {
+			db.transaction((tx) => {
+				tx.executeSql(
+					"SELECT * FROM tasks WHERE id = ?;",
+					[id],
+					(_, result) => {
+						const task = result.rows._array[0] as TaskEntity;
+						if (!task) return reject(new Error());
+						resolve(task);
+					},
 					(_, err) => handleSQLiteError(err, reject)
 				);
 			});
