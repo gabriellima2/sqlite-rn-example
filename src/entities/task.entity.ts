@@ -1,5 +1,5 @@
 export interface TaskEntity {
-	id: string;
+	id: number;
 	title: string;
 	description?: string;
 	is_completed: 0 | 1;

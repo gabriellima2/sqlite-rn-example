@@ -40,7 +40,26 @@ export class TaskRepositoryImpl implements TaskRepository {
 		});
 	}
 	delete(params: DeleteTaskInputDTO): Promise<DeleteTaskOutputDTO> {
-		throw new Error("Method not implemented");
+		const { id } = params;
+		return new Promise((resolve, reject) => {
+			db.transaction((tx) => {
+				tx.executeSql(
+					"SELECT * FROM tasks WHERE id = ?;",
+					[id],
+					(_, result) => {
+						const task = result.rows._array[0] as TaskEntity;
+						if (!task) return reject(new Error());
+						return tx.executeSql(
+							"DELETE FROM tasks WHERE id = ?;",
+							[id],
+							() => resolve(task),
+							(_, err) => handleSQLiteError(err, reject)
+						);
+					},
+					(_, err) => handleSQLiteError(err, reject)
+				);
+			});
+		});
 	}
 	update(params: UpdateTaskInputDTO): Promise<UpdateTaskOutputDTO> {
 		throw new Error("Method not implemented");
