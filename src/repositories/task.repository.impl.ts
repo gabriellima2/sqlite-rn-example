@@ -27,9 +27,9 @@ export class TaskRepositoryImpl implements TaskRepository {
 							"SELECT * FROM tasks WHERE id = ?;",
 							[result.insertId],
 							(_, result) => {
-								const { rows } = result;
-								if (rows._array.length === 0) return reject(new Error());
-								resolve(rows._array[0] as TaskEntity);
+								const insertedTask = result.rows._array[0] as TaskEntity;
+								if (!insertedTask) return reject(new Error());
+								resolve(insertedTask);
 							},
 							(_, err) => handleSQLiteError(err, reject)
 						);
