@@ -62,7 +62,28 @@ export class TaskRepositoryImpl implements TaskRepository {
 		});
 	}
 	update(params: UpdateTaskInputDTO): Promise<UpdateTaskOutputDTO> {
-		throw new Error("Method not implemented");
+		const { id, title, description, is_completed } = params;
+		return new Promise((resolve, reject) => {
+			db.transaction((tx) => {
+				tx.executeSql(
+					"UPDATE tasks SET title = COALESCE(?, title), description = COALESCE(?, description), is_completed = COALESCE(?, is_completed), updated_at = CURRENT_TIMESTAMP WHERE id = ?;",
+					[title ?? null, description ?? null, is_completed ?? null, id],
+					() => {
+						tx.executeSql(
+							"SELECT * FROM tasks WHERE id = ?;",
+							[id],
+							(_, result) => {
+								const updatedTask = result.rows._array[0] as TaskEntity;
+								if (!updatedTask) return reject(new Error());
+								resolve(updatedTask);
+							},
+							(_, err) => handleSQLiteError(err, reject)
+						);
+					},
+					(_, err) => handleSQLiteError(err, reject)
+				);
+			});
+		});
 	}
 	getAll(): Promise<GetAllTasksOutputDTO> {
 		return new Promise((resolve, reject) => {
