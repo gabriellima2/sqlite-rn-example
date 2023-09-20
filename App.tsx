@@ -1,24 +1,43 @@
+import {
+	NativeModules,
+	Platform,
+	SafeAreaView,
+	StyleSheet,
+	View,
+} from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+
+import { TaskForm } from "./src/components";
 
 import { bootstrapDB } from "./src/configs";
+import { theme } from "./src/styles";
 
 bootstrapDB();
 
 export default function App() {
 	return (
-		<View style={styles.container}>
-			<Text>Open up App.tsx to start working on your app!</Text>
-			<StatusBar style="auto" />
-		</View>
+		<>
+			<StatusBar style="inverted" />
+			<View style={styles.screen}>
+				<SafeAreaView style={styles.container}>
+					<TaskForm />
+				</SafeAreaView>
+			</View>
+		</>
 	);
 }
 
+const SPACING_TOP = Math.round(
+	Platform.OS === "ios" ? 20 : NativeModules.StatusBarManager.HEIGHT + 20
+);
+
 const styles = StyleSheet.create({
-	container: {
+	screen: {
 		flex: 1,
-		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
+		backgroundColor: theme.background,
+	},
+	container: {
+		paddingTop: SPACING_TOP,
+		paddingHorizontal: 12,
 	},
 });
