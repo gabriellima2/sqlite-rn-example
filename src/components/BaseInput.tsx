@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
-type BaseInputProps = TextInputProps;
+export type BaseInputProps = TextInputProps;
 
 export const BaseInput = (props: BaseInputProps) => {
 	const { style, ...rest } = props;
