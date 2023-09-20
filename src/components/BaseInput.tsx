@@ -1,4 +1,5 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native";
+import { theme } from "../styles";
 
 export type BaseInputProps = TextInputProps;
 
@@ -8,17 +9,18 @@ export const BaseInput = (props: BaseInputProps) => {
 		<TextInput
 			{...rest}
 			style={[style, styles.input]}
-			placeholderTextColor="#00000075"
+			placeholderTextColor={theme.text.secondary}
 		/>
 	);
 };
 
 const styles = StyleSheet.create({
 	input: {
-		height: 45,
-		borderBottomWidth: 1,
-		borderBottomColor: "#d4d4d4",
+		height: 60,
+		backgroundColor: theme.overlay,
 		padding: 12,
+		paddingHorizontal: 16,
 		fontSize: 14,
+		borderRadius: 20,
 	},
 });

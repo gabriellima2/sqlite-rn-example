@@ -4,6 +4,7 @@ import {
 	TouchableOpacity,
 	type TouchableOpacityProps,
 } from "react-native";
+import { theme } from "../styles";
 
 type BaseButtonProps = TouchableOpacityProps;
 
@@ -23,14 +24,15 @@ export const BaseButton = (props: BaseButtonProps) => {
 const styles = StyleSheet.create({
 	button: {
 		width: "auto",
-		height: 45,
+		height: 60,
 		alignItems: "center",
 		justifyContent: "center",
+		borderRadius: 20,
 		padding: 12,
-		backgroundColor: "#111111",
+		backgroundColor: theme.brand,
 	},
 	text: {
-		color: "#f1f1f1",
+		color: theme.text.primary,
 		fontWeight: "500",
 	},
 });

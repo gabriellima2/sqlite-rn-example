@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TextProps } from "react-native";
+import { theme } from "../styles";
 
 type BaseLabelProps = TextProps;
 
@@ -10,6 +11,6 @@ export const BaseLabel = (props: BaseLabelProps) => {
 const styles = StyleSheet.create({
 	label: {
 		fontWeight: "500",
-		color: "#111111",
+		color: theme.text.primary,
 	},
 });

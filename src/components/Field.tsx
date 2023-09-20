@@ -23,6 +23,6 @@ export const Field = (props: FieldProps) => {
 
 const styles = StyleSheet.create({
 	container: {
-		gap: 6,
+		gap: 8,
 	},
 });

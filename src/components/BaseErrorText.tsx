@@ -1,4 +1,5 @@
 import { StyleSheet, Text } from "react-native";
+import { theme } from "../styles";
 
 type BaseErrorTextProps = {
 	message?: string;
@@ -16,6 +17,6 @@ export const BaseErrorText = (props: BaseErrorTextProps) => {
 
 const styles = StyleSheet.create({
 	text: {
-		color: "#ec3535",
+		color: theme.utils.alert,
 	},
 });
