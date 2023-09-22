@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		fontSize: 14,
 		color: theme.text.primary,
-		borderRadius: 20,
+		borderRadius: 8,
 	},
 });

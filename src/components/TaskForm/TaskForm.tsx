@@ -22,6 +22,6 @@ export const TaskForm = () => {
 
 const styles = StyleSheet.create({
 	container: {
-		gap: 20,
+		gap: 12,
 	},
 });
