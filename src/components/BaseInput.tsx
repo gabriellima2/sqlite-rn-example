@@ -9,7 +9,7 @@ export const BaseInput = (props: BaseInputProps) => {
 		<TextInput
 			{...rest}
 			style={[style, styles.input]}
-			placeholderTextColor={theme.text.secondary}
+			placeholderTextColor={theme.text.tertiary}
 		/>
 	);
 };
@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 		padding: 12,
 		paddingHorizontal: 16,
 		fontSize: 14,
+		color: theme.text.primary,
 		borderRadius: 20,
 	},
 });

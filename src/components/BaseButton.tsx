@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.brand,
 	},
 	text: {
-		color: theme.text.primary,
+		color: theme.text.secondary,
 		fontWeight: "500",
 	},
 });
