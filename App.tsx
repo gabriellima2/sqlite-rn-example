@@ -8,13 +8,14 @@ import {
 import { StatusBar } from "expo-status-bar";
 
 import { TaskForm } from "./src/components";
+import { WithTaskStorePopulated } from "./src/store/task-store";
 
 import { bootstrapDB } from "./src/configs";
 import { theme } from "./src/styles";
 
 bootstrapDB();
 
-export default function App() {
+function App() {
 	return (
 		<>
 			<StatusBar style="inverted" />
@@ -26,6 +27,8 @@ export default function App() {
 		</>
 	);
 }
+
+export default WithTaskStorePopulated(App);
 
 const SPACING_TOP = Math.round(
 	Platform.OS === "ios" ? 20 : NativeModules.StatusBarManager.HEIGHT + 20
