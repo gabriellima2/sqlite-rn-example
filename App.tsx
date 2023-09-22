@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-import { TaskForm } from "./src/components";
+import { TaskForm, Tasks } from "./src/components";
 import { WithTaskStorePopulated } from "./src/store/task-store";
 
 import { bootstrapDB } from "./src/configs";
@@ -22,6 +22,7 @@ function App() {
 			<View style={styles.screen}>
 				<SafeAreaView style={styles.container}>
 					<TaskForm />
+					<Tasks />
 				</SafeAreaView>
 			</View>
 		</>
