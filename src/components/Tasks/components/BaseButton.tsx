@@ -9,9 +9,13 @@ import { theme } from "../../../styles";
 export type BaseButtonProps = TouchableOpacityProps;
 
 export const BaseButton = (props: BaseButtonProps) => {
-	const { children, style } = props;
+	const { children, style, ...rest } = props;
 	return (
-		<TouchableOpacity style={[style, styles.button]} activeOpacity={0.8}>
+		<TouchableOpacity
+			style={[style, styles.button]}
+			activeOpacity={0.8}
+			{...rest}
+		>
 			<Text style={styles.text}>{children}</Text>
 		</TouchableOpacity>
 	);
