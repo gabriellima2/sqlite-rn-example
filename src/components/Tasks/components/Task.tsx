@@ -1,4 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
+import Swipeable from "react-native-gesture-handler/Swipeable";
+
+import { RemoveButton } from "./RemoveButton";
+import { EditButton } from "./EditButton";
+
 import { theme } from "../../../styles";
 
 type TaskProps = {
@@ -10,20 +15,26 @@ type TaskProps = {
 export const Task = (props: TaskProps) => {
 	const { title, description, isCompleted } = props;
 	return (
-		<View
-			style={[styles.container, isCompleted && styles.isCompletedContainer]}
+		<Swipeable
+			renderLeftActions={() => <EditButton />}
+			renderRightActions={() => <RemoveButton />}
+			onSwipeableOpen={(direction) => console.log(direction)}
 		>
-			<View style={styles.content}>
-				<Text style={[styles.title, isCompleted && styles.isCompletedText]}>
-					{title}
-				</Text>
-				<Text
-					style={[styles.description, isCompleted && styles.isCompletedText]}
-				>
-					{description}
-				</Text>
+			<View
+				style={[styles.container, isCompleted && styles.isCompletedContainer]}
+			>
+				<View style={styles.content}>
+					<Text style={[styles.title, isCompleted && styles.isCompletedText]}>
+						{title}
+					</Text>
+					<Text
+						style={[styles.description, isCompleted && styles.isCompletedText]}
+					>
+						{description}
+					</Text>
+				</View>
 			</View>
-		</View>
+		</Swipeable>
 	);
 };
 

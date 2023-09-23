@@ -6,7 +6,7 @@ export const theme = {
 		secondary: "#1b1d1e",
 		tertiary: "#dadbd67a",
 	},
-	overlay: "#f1f1f10b",
+	overlay: "#232323",
 	utils: {
 		alert: "#ec3535",
 	},
