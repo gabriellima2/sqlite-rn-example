@@ -11,6 +11,7 @@ export const Tasks = () => {
 			keyExtractor={({ id }) => id.toString()}
 			renderItem={({ item }) => (
 				<Task
+					id={item.id}
 					title={item.title}
 					description={item.description}
 					isCompleted={!!item.is_completed}

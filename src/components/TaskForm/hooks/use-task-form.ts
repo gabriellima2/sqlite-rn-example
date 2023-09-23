@@ -41,10 +41,9 @@ export function useTaskForm(): UseTaskFormReturn {
 	};
 
 	useEffect(() => {
-		if (!taskThatWillBeUpdated) return;
 		setValues({
-			title: taskThatWillBeUpdated.title ?? "",
-			description: taskThatWillBeUpdated.description ?? "",
+			title: taskThatWillBeUpdated?.title ?? "",
+			description: taskThatWillBeUpdated?.description ?? "",
 		});
 	}, [taskThatWillBeUpdated?.id]);
 
