@@ -1,3 +1,5 @@
+import "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
 	NativeModules,
 	Platform,
@@ -21,8 +23,10 @@ function App() {
 			<StatusBar style="inverted" />
 			<View style={styles.screen}>
 				<SafeAreaView style={styles.container}>
-					<TaskForm />
-					<Tasks />
+					<GestureHandlerRootView>
+						<TaskForm />
+						<Tasks />
+					</GestureHandlerRootView>
 				</SafeAreaView>
 			</View>
 		</>
