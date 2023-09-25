@@ -12,7 +12,7 @@ export type UseTaskParams = Pick<TaskEntity, "id" | "title" | "description"> & {
 };
 
 export function useTask(params: UseTaskParams) {
-	const { delete: deleteTask, isLoading } = useTaskStore((state) => state);
+	const { isLoading, delete: deleteTask } = useTaskStore((state) => state);
 	const { prepareTaskFormToUpdateTask, clearForm } = useTaskFormStore(
 		(state) => state
 	);
@@ -24,9 +24,9 @@ export function useTask(params: UseTaskParams) {
 		});
 	};
 
-	const handleRemove = () => {
+	const handleRemove = async () => {
 		if (isLoading) return;
-		deleteTask({ id: params.id });
+		await deleteTask({ id: params.id });
 	};
 
 	const handleSwipeableOpen = (direction: Directions) => {

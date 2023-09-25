@@ -30,12 +30,12 @@ export function useTaskForm(): UseTaskFormReturn {
 		setValues((prevState) => ({ ...prevState, [field]: value }));
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
 		if (action === TaskFormActions.Create) {
-			insertTask({ ...values, is_completed: 0 });
+			await insertTask({ ...values, is_completed: 0 });
 		}
 		if (action === TaskFormActions.Update && taskThatWillBeUpdated) {
-			updateTask({ ...taskThatWillBeUpdated, ...values });
+			await updateTask({ ...taskThatWillBeUpdated, ...values });
 		}
 		clearForm();
 	};
