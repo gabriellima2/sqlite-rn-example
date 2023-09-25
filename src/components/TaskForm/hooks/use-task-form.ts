@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type MutableRefObject } from "react";
+import { Keyboard, type TextInput } from "react-native";
 
 import {
 	TaskFormActions,
@@ -6,12 +7,16 @@ import {
 	type TaskFormFields,
 } from "../../../store/task-form-store";
 import { useTaskStore } from "../../../store/task-store";
+import { focusField } from "../../../helpers/focus-field";
 
 type UseTaskFormReturn = {
 	values: TaskFormFields;
+	isSubmitting: boolean;
 	buttonText: string;
+	descriptionFieldRef: MutableRefObject<TextInput | null>;
 	handleSubmit: () => void;
 	handleChange: (value: string, field: keyof TaskFormFields) => void;
+	focusDescriptionField: () => void;
 };
 
 export function useTaskForm(): UseTaskFormReturn {
@@ -21,16 +26,22 @@ export function useTaskForm(): UseTaskFormReturn {
 	const { insert: insertTask, update: updateTask } = useTaskStore(
 		(state) => state
 	);
+	const descriptionFieldRef = useRef<null | TextInput>(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [values, setValues] = useState<TaskFormFields>({
 		title: "",
 		description: "",
 	});
+
+	const focusDescriptionField = () => focusField(descriptionFieldRef);
 
 	const handleChange = (value: string, field: keyof TaskFormFields) => {
 		setValues((prevState) => ({ ...prevState, [field]: value }));
 	};
 
 	const handleSubmit = async () => {
+		if (isSubmitting) return;
+		setIsSubmitting(true);
 		if (action === TaskFormActions.Create) {
 			await insertTask({ ...values, is_completed: 0 });
 		}
@@ -38,6 +49,8 @@ export function useTaskForm(): UseTaskFormReturn {
 			await updateTask({ ...taskThatWillBeUpdated, ...values });
 		}
 		clearForm();
+		setIsSubmitting(false);
+		Keyboard.dismiss();
 	};
 
 	useEffect(() => {
@@ -53,7 +66,10 @@ export function useTaskForm(): UseTaskFormReturn {
 	return {
 		values,
 		buttonText,
+		isSubmitting,
+		descriptionFieldRef,
 		handleChange,
 		handleSubmit,
+		focusDescriptionField,
 	};
 }

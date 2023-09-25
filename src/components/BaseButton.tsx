@@ -2,21 +2,27 @@ import {
 	Text,
 	StyleSheet,
 	TouchableOpacity,
+	ActivityIndicator,
 	type TouchableOpacityProps,
 } from "react-native";
 import { theme } from "../styles";
 
-type BaseButtonProps = TouchableOpacityProps;
+type BaseButtonProps = TouchableOpacityProps & {
+	loading?: boolean;
+};
 
 export const BaseButton = (props: BaseButtonProps) => {
-	const { children, style, ...rest } = props;
+	const { children, style, loading, ...rest } = props;
 	return (
 		<TouchableOpacity
 			activeOpacity={0.7}
 			{...rest}
-			style={[style, styles.button]}
+			style={[style, styles.button, loading && styles.disabled]}
+			disabled={loading}
 		>
-			<Text style={styles.text}>{children}</Text>
+			<Text style={styles.text}>
+				{loading ? <ActivityIndicator /> : children}
+			</Text>
 		</TouchableOpacity>
 	);
 };
@@ -34,5 +40,9 @@ const styles = StyleSheet.create({
 	text: {
 		color: theme.text.secondary,
 		fontWeight: "500",
+	},
+	disabled: {
+		pointerEvents: "none",
+		opacity: 0.5,
 	},
 });
