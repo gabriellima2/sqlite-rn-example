@@ -10,7 +10,9 @@ import {
 import { StatusBar } from "expo-status-bar";
 
 import { TaskForm, Tasks } from "./src/components";
+
 import { WithTaskStorePopulated } from "./src/store/task-store";
+import { useShowTaskError } from "./src/store/task-store";
 
 import { bootstrapDB } from "./src/configs";
 import { theme } from "./src/styles";
@@ -18,6 +20,7 @@ import { theme } from "./src/styles";
 bootstrapDB();
 
 function App() {
+	useShowTaskError();
 	return (
 		<>
 			<StatusBar style="inverted" />

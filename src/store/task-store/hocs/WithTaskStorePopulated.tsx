@@ -9,9 +9,9 @@ export function WithTaskStorePopulated<P extends {}>(
 ) {
 	return function hoc(props: P) {
 		usePopulateTaskStore();
-		const { isLoading, error } = useTaskStore((state) => state);
+		const { isLoading, tasks, error } = useTaskStore((state) => state);
 		if (isLoading) return <Text>Loading...</Text>;
-		if (!isLoading && error) return <Text>{error}</Text>;
+		if (!isLoading && !tasks && error) return <Text>{error}</Text>;
 		return <Component {...(props as P)} />;
 	};
 }
