@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useTaskFormStore } from "../../../store/task-form-store";
 import { useTaskStore } from "../../../store/task-store";
 
@@ -6,16 +8,28 @@ import type { Directions } from "../@types/directions";
 import type { TaskEntity } from "../../../entities";
 
 export type UseTaskParams = Pick<TaskEntity, "id" | "title" | "description"> & {
-	title: string;
-	description?: string;
 	isCompleted: boolean;
 };
 
-export function useTask(params: UseTaskParams) {
-	const { isLoading, delete: deleteTask } = useTaskStore((state) => state);
+type UseTaskReturn = {
+	isCompleted: boolean;
+	handleEdit: () => void;
+	handleRemove: () => void;
+	handleSwipeableOpen: (direction: Directions) => void;
+	handleSwipeableClose: (direction: Directions) => void;
+	handleIsCompletedChanges: () => void;
+};
+
+export function useTask(params: UseTaskParams): UseTaskReturn {
+	const {
+		isLoading,
+		delete: deleteTask,
+		update: updateTask,
+	} = useTaskStore((state) => state);
 	const { prepareTaskFormToUpdateTask, clearForm } = useTaskFormStore(
 		(state) => state
 	);
+	const [isCompleted, setIsCompleted] = useState(params.isCompleted);
 
 	const handleEdit = () => {
 		prepareTaskFormToUpdateTask({
@@ -38,10 +52,17 @@ export function useTask(params: UseTaskParams) {
 		if (direction === SwipeDirections.Left) return clearForm();
 	};
 
+	const handleIsCompletedChanges = async () => {
+		setIsCompleted((prevState) => !prevState);
+		await updateTask({ ...params, is_completed: !isCompleted ? 1 : 0 });
+	};
+
 	return {
+		isCompleted,
 		handleEdit,
 		handleRemove,
 		handleSwipeableOpen,
 		handleSwipeableClose,
+		handleIsCompletedChanges,
 	};
 }
