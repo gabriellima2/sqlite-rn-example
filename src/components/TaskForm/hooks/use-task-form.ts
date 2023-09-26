@@ -39,6 +39,12 @@ export function useTaskForm(): UseTaskFormReturn {
 		setValues((prevState) => ({ ...prevState, [field]: value }));
 	};
 
+	const clear = () => {
+		clearForm();
+		setValues({ title: "", description: "" });
+		Keyboard.dismiss();
+	};
+
 	const handleSubmit = async () => {
 		if (isSubmitting) return;
 		setIsSubmitting(true);
@@ -48,9 +54,8 @@ export function useTaskForm(): UseTaskFormReturn {
 		if (action === TaskFormActions.Update && taskThatWillBeUpdated) {
 			await updateTask({ ...taskThatWillBeUpdated, ...values });
 		}
-		clearForm();
+		clear();
 		setIsSubmitting(false);
-		Keyboard.dismiss();
 	};
 
 	useEffect(() => {
