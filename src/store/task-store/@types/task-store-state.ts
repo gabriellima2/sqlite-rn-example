@@ -9,6 +9,7 @@ export interface TaskStoreState {
 	tasks: TaskEntity[] | null;
 	error: string | null;
 	isLoading: boolean;
+	total: number;
 	insert: (params: InsertTaskInputDTO) => Promise<void>;
 	update: (params: UpdateTaskInputDTO) => Promise<void>;
 	delete: (params: DeleteTaskInputDTO) => Promise<void>;

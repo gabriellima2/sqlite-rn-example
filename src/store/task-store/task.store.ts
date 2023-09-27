@@ -16,6 +16,7 @@ const validator = makeTaskValidator();
 export const useTaskStore = create<TaskStoreState>((set) => ({
 	tasks: null,
 	error: null,
+	total: 0,
 	isLoading: true,
 	insert: async (params: InsertTaskInputDTO) => {
 		try {
@@ -24,7 +25,12 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 			const task = await repository.insert(params);
 			set((state) => {
 				const refreshedTask = state.tasks ? [...state.tasks, task] : [task];
-				return { ...state, tasks: refreshedTask, isLoading: false };
+				return {
+					...state,
+					tasks: refreshedTask,
+					isLoading: false,
+					total: refreshedTask.length,
+				};
 			});
 		} catch (err) {
 			set({ error: (err as Error).message, isLoading: false });
@@ -55,7 +61,12 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 				const refreshedTask = state.tasks?.filter(
 					(task) => task.id !== deletedTask.id
 				);
-				return { ...state, tasks: refreshedTask, isLoading: false };
+				return {
+					...state,
+					tasks: refreshedTask,
+					isLoading: false,
+					total: refreshedTask?.length,
+				};
 			});
 		} catch (err) {
 			set({ error: (err as Error).message, isLoading: false });
@@ -64,7 +75,7 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 	getAll: async () => {
 		try {
 			const tasks = await repository.getAll();
-			set({ tasks, isLoading: false });
+			set({ tasks, isLoading: false, total: tasks.length });
 		} catch (err) {
 			set({ error: (err as Error).message, isLoading: false });
 		}

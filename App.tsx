@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-import { TaskForm, Tasks } from "./src/components";
+import { TaskForm, Tasks, TasksQuantity } from "./src/components";
 
 import { WithTaskStorePopulated } from "./src/store/task-store";
 import { useShowTaskError } from "./src/store/task-store";
@@ -26,8 +26,9 @@ function App() {
 			<StatusBar style="inverted" />
 			<View style={styles.screen}>
 				<SafeAreaView style={styles.container}>
-					<GestureHandlerRootView>
+					<GestureHandlerRootView style={styles.content}>
 						<TaskForm />
+						<TasksQuantity />
 						<Tasks />
 					</GestureHandlerRootView>
 				</SafeAreaView>
@@ -50,5 +51,8 @@ const styles = StyleSheet.create({
 	container: {
 		paddingTop: SPACING_TOP,
 		paddingHorizontal: 12,
+	},
+	content: {
+		gap: 18,
 	},
 });

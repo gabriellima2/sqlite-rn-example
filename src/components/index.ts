@@ -1,4 +1,5 @@
 export * from "./BaseErrorText";
+export * from "./TasksQuantity";
 export * from "./BaseButton";
 export * from "./BaseInput";
 export * from "./BaseLabel";
