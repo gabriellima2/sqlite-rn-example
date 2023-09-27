@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 import { makeTaskRepositoryImpl } from "../../factories/repositories";
+import { makeTaskValidator } from "../../factories/validators";
 
 import type {
 	InsertTaskInputDTO,
@@ -10,6 +11,7 @@ import type {
 import type { TaskStoreState } from "./@types/task-store-state";
 
 const repository = makeTaskRepositoryImpl();
+const validator = makeTaskValidator();
 
 export const useTaskStore = create<TaskStoreState>((set) => ({
 	tasks: null,
@@ -17,6 +19,8 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 	isLoading: true,
 	insert: async (params: InsertTaskInputDTO) => {
 		try {
+			const validationResult = validator.insert(params);
+			if (validationResult.message) throw new Error(validationResult.message);
 			const task = await repository.insert(params);
 			set((state) => {
 				const refreshedTask = state.tasks ? [...state.tasks, task] : [task];
@@ -28,6 +32,8 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 	},
 	update: async (params: UpdateTaskInputDTO) => {
 		try {
+			const validationResult = validator.update(params);
+			if (validationResult.message) throw new Error(validationResult.message);
 			const updatedTask = await repository.update(params);
 			set((state) => {
 				const refreshedTask = state.tasks?.map((task) => {
@@ -42,6 +48,8 @@ export const useTaskStore = create<TaskStoreState>((set) => ({
 	},
 	delete: async (params: DeleteTaskInputDTO) => {
 		try {
+			const validationResult = validator.delete(params);
+			if (validationResult.message) throw new Error(validationResult.message);
 			const deletedTask = await repository.delete(params);
 			set((state) => {
 				const refreshedTask = state.tasks?.filter(
