@@ -1,6 +1,6 @@
 import { FlatList, StyleSheet } from "react-native";
 
-import { Task } from "./components";
+import { Task, TasksQuantity } from "./components";
 import { useTaskStore } from "../../store/task-store";
 
 export const Tasks = () => {
@@ -19,6 +19,7 @@ export const Tasks = () => {
 			)}
 			contentContainerStyle={styles.content}
 			showsVerticalScrollIndicator={false}
+			ListHeaderComponent={TasksQuantity}
 			style={styles.list}
 		/>
 	);
@@ -28,5 +29,7 @@ const styles = StyleSheet.create({
 	list: {},
 	content: {
 		gap: 12,
+		paddingTop: 6,
+		paddingBottom: 12,
 	},
 });

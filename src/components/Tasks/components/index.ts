@@ -1,3 +1,4 @@
-export * from "./Task";
-export * from "./EditButton";
+export * from "./TasksQuantity";
 export * from "./RemoveButton";
+export * from "./EditButton";
+export * from "./Task";

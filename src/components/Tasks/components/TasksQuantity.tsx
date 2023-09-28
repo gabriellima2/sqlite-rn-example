@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
-import { useTaskStore } from "../store/task-store";
-import { theme } from "../styles";
+import { useTaskStore } from "../../../store/task-store";
+import { theme } from "../../../styles";
 
 export const TasksQuantity = () => {
 	const { total } = useTaskStore((state) => state);
