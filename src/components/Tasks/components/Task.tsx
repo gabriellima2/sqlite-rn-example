@@ -29,9 +29,7 @@ export const Task = (props: TaskProps) => {
 		<Swipeable
 			renderLeftActions={() => <EditButton onPress={handleEdit} />}
 			renderRightActions={() => <RemoveButton onPress={handleRemove} />}
-			onSwipeableClose={(direction) =>
-				handleSwipeableClose(direction as Directions)
-			}
+			onSwipeableClose={handleSwipeableClose}
 			onSwipeableOpen={(direction) =>
 				handleSwipeableOpen(direction as Directions)
 			}

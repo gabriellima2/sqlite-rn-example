@@ -16,7 +16,7 @@ type UseTaskReturn = {
 	handleEdit: () => void;
 	handleRemove: () => void;
 	handleSwipeableOpen: (direction: Directions) => void;
-	handleSwipeableClose: (direction: Directions) => void;
+	handleSwipeableClose: () => void;
 	handleIsCompletedChanges: () => void;
 };
 
@@ -48,9 +48,7 @@ export function useTask(params: UseTaskParams): UseTaskReturn {
 		if (direction === SwipeDirections.Left) return handleEdit();
 	};
 
-	const handleSwipeableClose = (direction: Directions) => {
-		if (direction === SwipeDirections.Left) return clearForm();
-	};
+	const handleSwipeableClose = () => clearForm();
 
 	const handleIsCompletedChanges = async () => {
 		setIsCompleted((prevState) => !prevState);
