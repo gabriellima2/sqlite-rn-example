@@ -10,7 +10,7 @@ import type { UpdateTaskInputDTO } from "../../../dtos";
 
 export const updateTaskSchema: z.ZodType<UpdateTaskInputDTO> = z.object({
 	id: taskIdConstraint,
-	title: taskTitleConstraint.optional(),
+	title: taskTitleConstraint,
 	description: taskDescriptionConstraint.optional(),
 	is_completed: taskIsCompletedConstraint.optional(),
 });

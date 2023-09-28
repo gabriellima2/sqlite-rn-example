@@ -10,6 +10,7 @@ export const TaskForm = () => {
 		values,
 		buttonText,
 		isSubmitting,
+		validationErrors,
 		descriptionFieldRef,
 		handleChange,
 		handleSubmit,
@@ -25,6 +26,7 @@ export const TaskForm = () => {
 				returnKeyType="next"
 				onSubmitEditing={focusDescriptionField}
 				onChangeText={(value) => handleChange(value, "title")}
+				errorMessage={validationErrors.title}
 			/>
 			<Field
 				ref={descriptionFieldRef}
@@ -35,6 +37,7 @@ export const TaskForm = () => {
 				returnKeyType="send"
 				onSubmitEditing={handleSubmit}
 				onChangeText={(value) => handleChange(value, "description")}
+				errorMessage={validationErrors.description}
 			/>
 			<BaseButton onPress={handleSubmit} loading={isSubmitting}>
 				{buttonText}
